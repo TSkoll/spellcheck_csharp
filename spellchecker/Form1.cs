@@ -21,7 +21,8 @@ namespace spellchecker
 
         private void bCheck_Click(object sender, EventArgs e)
         {
-            if (!dict.DictionaryLoaded) dict.OpenDictionary();
+            if (!dict.DictionaryLoaded)
+                dict.OpenDictionary();
             Input input = new Input();
             input.GetWords(inbox.Text);
             input.CheckWords(dict);
