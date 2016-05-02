@@ -42,7 +42,7 @@ namespace spellchecker
 
         public bool Parse(string someString)
         {
-            return (dictionary.Contains(someString.ToLower())) ? true : false;
+            return (dictionary.Contains(someString)) ? true : false;
         }
     }
 }
