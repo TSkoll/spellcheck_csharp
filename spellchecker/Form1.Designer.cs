@@ -37,6 +37,7 @@
             this.bReplace = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
             this.bAdd = new System.Windows.Forms.Button();
+            this.bCheck = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -90,7 +91,7 @@
             // 
             // bReplace
             // 
-            this.bReplace.Location = new System.Drawing.Point(197, 74);
+            this.bReplace.Location = new System.Drawing.Point(197, 115);
             this.bReplace.Name = "bReplace";
             this.bReplace.Size = new System.Drawing.Size(75, 23);
             this.bReplace.TabIndex = 6;
@@ -99,7 +100,7 @@
             // 
             // bSkip
             // 
-            this.bSkip.Location = new System.Drawing.Point(197, 103);
+            this.bSkip.Location = new System.Drawing.Point(197, 144);
             this.bSkip.Name = "bSkip";
             this.bSkip.Size = new System.Drawing.Size(75, 23);
             this.bSkip.TabIndex = 7;
@@ -108,18 +109,29 @@
             // 
             // bAdd
             // 
-            this.bAdd.Location = new System.Drawing.Point(197, 132);
+            this.bAdd.Location = new System.Drawing.Point(197, 173);
             this.bAdd.Name = "bAdd";
             this.bAdd.Size = new System.Drawing.Size(75, 35);
             this.bAdd.TabIndex = 8;
             this.bAdd.Text = "Add to dictionary";
             this.bAdd.UseVisualStyleBackColor = true;
             // 
+            // bCheck
+            // 
+            this.bCheck.Location = new System.Drawing.Point(197, 51);
+            this.bCheck.Name = "bCheck";
+            this.bCheck.Size = new System.Drawing.Size(75, 23);
+            this.bCheck.TabIndex = 9;
+            this.bCheck.Text = "Check";
+            this.bCheck.UseVisualStyleBackColor = true;
+            this.bCheck.Click += new System.EventHandler(this.bCheck_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.bCheck);
             this.Controls.Add(this.bAdd);
             this.Controls.Add(this.bSkip);
             this.Controls.Add(this.bReplace);
@@ -147,6 +159,7 @@
         private System.Windows.Forms.Button bReplace;
         private System.Windows.Forms.Button bSkip;
         private System.Windows.Forms.Button bAdd;
+        private System.Windows.Forms.Button bCheck;
     }
 }
 
