@@ -8,7 +8,7 @@ using System.IO;
 
 namespace spellchecker
 {
-    class Dictionary
+    public class Dictionary
     {
         private string path = "";
         private List<string> dictionary = new List<string>();
@@ -35,9 +35,11 @@ namespace spellchecker
 
         private void GetDictionary(string somePath)
         {
-            StreamReader reader = new StreamReader(File.OpenRead(path));
-            while (!reader.EndOfStream) dictionary.Add(reader.ReadLine());
-            reader.Dispose();
+            using (StreamReader reader2 = new StreamReader(File.OpenRead(path)))
+            {
+                while (!reader2.EndOfStream)
+                    dictionary.Add(reader2.ReadLine());
+            }
         }
 
         public bool Parse(string someString)
