@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace spellchecker
@@ -23,10 +23,17 @@ namespace spellchecker
         {
             if (!dict.DictionaryLoaded)
                 dict.OpenDictionary();
-            Input input = new Input();
-            input.GetWords(inbox.Text);
-            input.CheckWords(dict);
-            outbox.Text = input.GetString();
+            List<string> inputWords = Input.GetWords(inbox.Text);
+            foreach (string word in inputWords)
+            {
+                object result = dict.SearchForEntry(word);
+                if (result is List<string>)
+                {
+                    foreach (string suggestion in (List<string>)result)
+                        listSuggest.Items.Add(suggestion);
+                    //Wait for event here - ???
+                }
+            }
         }
     }
 }

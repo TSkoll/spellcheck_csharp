@@ -17,7 +17,7 @@ namespace spellchecker
         {
             get
             {
-                return (path == "") ? false : true;
+                return (path != "");
             }
         }
 
@@ -42,9 +42,19 @@ namespace spellchecker
             }
         }
 
-        public bool Parse(string someString)
+        public object SearchForEntry(string someWord)
         {
-            return (dictionary.Contains(someString)) ? true : false;
+            if (dictionary.Contains(Input.Normalize(someWord)))
+                return someWord;
+            else
+            {
+                List<string> edits = Edit.GetEdits(Input.Normalize(someWord));
+                List<string> suggestions = new List<string>();
+                foreach (string word in edits)
+                    if (dictionary.Contains(word))
+                        suggestions.Add(word);
+                return suggestions;
+            }
         }
     }
 }

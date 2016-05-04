@@ -6,54 +6,35 @@ using System.Threading.Tasks;
 
 namespace spellchecker
 {
-    public class Input
+    public static class Input
     {
-        private List<string> input_words = new List<string>();
-
-        public void GetWords(string someString)
+        public static List<string> GetWords(string someString)
         {
-            StringToWords(someString);
-        }
-
-        private void StringToWords(string someString)
-        {
+            List<string> inputWords = new List<string>();
             char[] delim = { ' ' };
             foreach (string word in someString.Split(delim, StringSplitOptions.RemoveEmptyEntries))
-                input_words.Add(word);
+                inputWords.Add(word);
+            return inputWords;
         }
 
-        public void CheckWords(Dictionary someDictionary)
-        {
-            for (int i = 0; i < input_words.Count; i++)
-            {
-                if (!someDictionary.Parse(TrimWord(input_words[i])))
-                    input_words[i] = input_words[i].ToUpper();
-            }
-        }
-
-        private string WordsToString()
-        {
-            string output_string = "";
-            foreach (string word in input_words)
-                output_string += word + " ";
-            return output_string;
-        }
-
-        public string GetString()
-        {
-            return WordsToString();
-        }
-
-        private string TrimWord(string someWord)
+        public static string Normalize(string someWord)
         {
             char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'' };
-            int i = 0;
 
             someWord = someWord.ToLower();
-            while (i < someWord.Length) {
-                if (!alphabet.Contains(someWord[i])) someWord = someWord.Remove(i); else i++;
-            }
+            for (int i = 0; !alphabet.Contains(someWord[i]); i++)
+                someWord = someWord.Remove(i, 1);
+            for (int i = someWord.Length - 1; !alphabet.Contains(someWord[i]); i--)
+                someWord = someWord.Remove(i, 1);
             return someWord;
+        }
+
+        public static string GetString(List<string> someWords)
+        {
+            string outputString = "";
+            foreach (string word in someWords)
+                outputString += word + " ";
+            return outputString;
         }
     }
 }
