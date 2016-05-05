@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace spellchecker
 {
-    public static class Edit
+    public class Edit
     {
-        static char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-        private static string source;
-        private static List<string> edits = new List<string>();
+        private string source;
+        private List<string> edits = new List<string>();
 
-        public static List<string> GetEdits(string someWord)
+        public List<string> GetEdits(string someWord)
         {
             source = someWord;
             edits.AddRange(RemoveLetter(source));
@@ -21,7 +21,7 @@ namespace spellchecker
             return edits;
         }
 
-        private static List<string> RemoveLetter(string someWord)
+        private List<string> RemoveLetter(string someWord)
         {
             List<string> variants = new List<string>();
             for (int i = 0; i < someWord.Length; i++)
@@ -29,7 +29,7 @@ namespace spellchecker
             return variants;
         }
 
-        private static List<string> AddLetter(string someWord)
+        private List<string> AddLetter(string someWord)
         {
             List<string> variants = new List<string>();
             for (int i = 0; i <= someWord.Length; i++)

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using StringExtended;
 
 namespace spellchecker
 {
@@ -42,19 +43,10 @@ namespace spellchecker
             }
         }
 
-        public object SearchForEntry(string someWord)
+        public bool Contains(string someWord)
         {
-            if (dictionary.Contains(Input.Normalize(someWord)))
-                return someWord;
-            else
-            {
-                List<string> edits = Edit.GetEdits(Input.Normalize(someWord));
-                List<string> suggestions = new List<string>();
-                foreach (string word in edits)
-                    if (dictionary.Contains(word))
-                        suggestions.Add(word);
-                return suggestions;
-            }
+            return dictionary.Contains(someWord);
+
         }
     }
 }

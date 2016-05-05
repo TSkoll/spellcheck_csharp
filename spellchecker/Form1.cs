@@ -13,6 +13,7 @@ namespace spellchecker
     public partial class Form1 : Form
     {
         private Dictionary dict = new Dictionary();
+        private Input input;
 
         public Form1()
         {
@@ -23,17 +24,49 @@ namespace spellchecker
         {
             if (!dict.DictionaryLoaded)
                 dict.OpenDictionary();
-            List<string> inputWords = Input.GetWords(inbox.Text);
-            foreach (string word in inputWords)
+            outbox.Text = "";
+            input = new Input();
+            input.GetWords(inbox.Text);
+            FindMisspell();
+            bReplace.Enabled = true;
+            bSkip.Enabled = true;
+            bAdd.Enabled = true;
+        }
+
+        private void FindMisspell()
+        {            
+            input.FindNextMisspell(dict);
+            if (!input.ReachedEnd)
             {
-                object result = dict.SearchForEntry(word);
-                if (result is List<string>)
-                {
-                    foreach (string suggestion in (List<string>)result)
-                        listSuggest.Items.Add(suggestion);
-                    //Wait for event here - ???
-                }
+                label2.Text = "We couldn't find this word: " + input.CurrentWord;
+                listSuggest.Items.Clear();
+                listSuggest.Items.AddRange(input.GetSuggestions(dict).ToArray());
             }
+            else
+            {
+                label2.Text = "All done!";
+                listSuggest.Items.Clear();
+                bReplace.Enabled = false;
+                bSkip.Enabled = false;
+                bAdd.Enabled = false;
+                outbox.Text = input.GetString();
+            }
+        }
+
+        private void bReplace_Click(object sender, EventArgs e)
+        {
+            input.ReplaceWord(listSuggest.SelectedItem.ToString());
+            FindMisspell();
+        }
+
+        private void bSkip_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bAdd_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
