@@ -61,12 +61,13 @@ namespace spellchecker
 
         private void bSkip_Click(object sender, EventArgs e)
         {
-
+            FindMisspell();
         }
 
         private void bAdd_Click(object sender, EventArgs e)
         {
-
+            dict.AddToDictionary(input.CurrentWord);
+            FindMisspell();
         }
     }
 }

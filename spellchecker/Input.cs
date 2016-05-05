@@ -46,7 +46,7 @@ namespace spellchecker
         public List<string> GetSuggestions(Dictionary someDictionary)
         {
             Edit edits = new Edit();
-            List<string> editsList = edits.GetEdits(inputWords[wordCurrent].Normalize());
+            List<string> editsList = edits.GetEdits(inputWords[wordCurrent].NormalizeWord());
             List<string> suggestions = new List<string>();
             foreach (string word in editsList)
                 if (someDictionary.Contains(word))
