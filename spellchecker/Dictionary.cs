@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using StringExtended;
 
 namespace spellchecker
 {
@@ -17,7 +18,7 @@ namespace spellchecker
         {
             get
             {
-                return (path == "") ? false : true;
+                return (path != "");
             }
         }
 
@@ -42,9 +43,10 @@ namespace spellchecker
             }
         }
 
-        public bool Parse(string someString)
+        public bool Contains(string someWord)
         {
-            return (dictionary.Contains(someString)) ? true : false;
+            return dictionary.Contains(someWord);
+
         }
     }
 }

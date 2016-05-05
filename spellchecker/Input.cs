@@ -3,57 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StringExtended;
 
 namespace spellchecker
 {
     public class Input
     {
-        private List<string> input_words = new List<string>();
+        private List<string> inputWords;
+        private int wordCurrent = 0;
 
-        public void GetWords(string someString)
+        public bool ReachedEnd
         {
-            StringToWords(someString);
-        }
-
-        private void StringToWords(string someString)
-        {
-            char[] delim = { ' ' };
-            foreach (string word in someString.Split(delim, StringSplitOptions.RemoveEmptyEntries))
-                input_words.Add(word);
-        }
-
-        public void CheckWords(Dictionary someDictionary)
-        {
-            for (int i = 0; i < input_words.Count; i++)
+            get
             {
-                if (!someDictionary.Parse(TrimWord(input_words[i])))
-                    input_words[i] = input_words[i].ToUpper();
+                if (wordCurrent < inputWords.Count)
+                    return false;
+                else
+                    return true;
             }
         }
 
-        private string WordsToString()
+        public string CurrentWord
         {
-            string output_string = "";
-            foreach (string word in input_words)
-                output_string += word + " ";
-            return output_string;
+            get
+            {
+                return inputWords[wordCurrent];
+            }
+        }
+
+        public void GetWords(string inputString)
+        {
+            char[] delim = { ' ' };
+            inputWords = inputString.Split(delim, StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
+
+        public void FindNextMisspell(Dictionary someDictionary)
+        {
+            while ((wordCurrent < inputWords.Count) && (someDictionary.Contains(inputWords[wordCurrent].NormalizeWord())))
+                wordCurrent++;
+        }
+
+        public List<string> GetSuggestions(Dictionary someDictionary)
+        {
+            Edit edits = new Edit();
+            List<string> editsList = edits.GetEdits(inputWords[wordCurrent].Normalize());
+            List<string> suggestions = new List<string>();
+            foreach (string word in editsList)
+                if (someDictionary.Contains(word))
+                    suggestions.Add(word);
+            return suggestions;
+        }
+
+        public void ReplaceWord(string correctWord)
+        {
+            inputWords[wordCurrent] = correctWord;
+            wordCurrent++;
         }
 
         public string GetString()
         {
-            return WordsToString();
-        }
-
-        private string TrimWord(string someWord)
-        {
-            char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'' };
-            int i = 0;
-
-            someWord = someWord.ToLower();
-            while (i < someWord.Length) {
-                if (!alphabet.Contains(someWord[i])) someWord = someWord.Remove(i); else i++;
-            }
-            return someWord;
+            string outputString = "";
+            foreach (string word in inputWords)
+                outputString += word + " ";
+            outputString.Remove(outputString.Length-1, 1);
+            return outputString;
         }
     }
 }

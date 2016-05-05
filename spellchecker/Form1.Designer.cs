@@ -91,30 +91,36 @@
             // 
             // bReplace
             // 
+            this.bReplace.Enabled = false;
             this.bReplace.Location = new System.Drawing.Point(197, 115);
             this.bReplace.Name = "bReplace";
             this.bReplace.Size = new System.Drawing.Size(75, 23);
             this.bReplace.TabIndex = 6;
             this.bReplace.Text = "Replace";
             this.bReplace.UseVisualStyleBackColor = true;
+            this.bReplace.Click += new System.EventHandler(this.bReplace_Click);
             // 
             // bSkip
             // 
+            this.bSkip.Enabled = false;
             this.bSkip.Location = new System.Drawing.Point(197, 144);
             this.bSkip.Name = "bSkip";
             this.bSkip.Size = new System.Drawing.Size(75, 23);
             this.bSkip.TabIndex = 7;
             this.bSkip.Text = "Skip";
             this.bSkip.UseVisualStyleBackColor = true;
+            this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
             // bAdd
             // 
+            this.bAdd.Enabled = false;
             this.bAdd.Location = new System.Drawing.Point(197, 173);
             this.bAdd.Name = "bAdd";
             this.bAdd.Size = new System.Drawing.Size(75, 35);
             this.bAdd.TabIndex = 8;
             this.bAdd.Text = "Add to dictionary";
             this.bAdd.UseVisualStyleBackColor = true;
+            this.bAdd.Click += new System.EventHandler(this.bAdd_Click);
             // 
             // bCheck
             // 

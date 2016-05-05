@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace spellchecker
@@ -13,6 +13,7 @@ namespace spellchecker
     public partial class Form1 : Form
     {
         private Dictionary dict = new Dictionary();
+        private Input input;
 
         public Form1()
         {
@@ -23,10 +24,49 @@ namespace spellchecker
         {
             if (!dict.DictionaryLoaded)
                 dict.OpenDictionary();
-            Input input = new Input();
+            outbox.Text = "";
+            input = new Input();
             input.GetWords(inbox.Text);
-            input.CheckWords(dict);
-            outbox.Text = input.GetString();
+            bReplace.Enabled = true;
+            bSkip.Enabled = true;
+            bAdd.Enabled = true;
+            FindMisspell();
+        }
+
+        private void FindMisspell()
+        {            
+            input.FindNextMisspell(dict);
+            if (!input.ReachedEnd)
+            {
+                label2.Text = "We couldn't find this word: " + input.CurrentWord;
+                listSuggest.Items.Clear();
+                listSuggest.Items.AddRange(input.GetSuggestions(dict).ToArray());
+            }
+            else
+            {
+                label2.Text = "All done!";
+                listSuggest.Items.Clear();
+                bReplace.Enabled = false;
+                bSkip.Enabled = false;
+                bAdd.Enabled = false;
+                outbox.Text = input.GetString();
+            }
+        }
+
+        private void bReplace_Click(object sender, EventArgs e)
+        {
+            input.ReplaceWord(listSuggest.SelectedItem.ToString());
+            FindMisspell();
+        }
+
+        private void bSkip_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bAdd_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
