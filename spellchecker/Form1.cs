@@ -50,7 +50,7 @@ namespace spellchecker
             input.FindNextMisspell(dict);
             if (!input.ReachedEnd)
             {
-                label2.Text = "We couldn't find this word: " + input.CurrentWord;
+                label2.Text = "We couldn't find this word: '" + input.CurrentWord + "'. Did you mean: ";
                 listSuggest.Items.Clear();
                 listSuggest.Items.AddRange(input.GetSuggestions(dict).ToArray());
                 bSkip.Enabled = true;
@@ -87,6 +87,16 @@ namespace spellchecker
         {
             dict.AddToDictionary(input.CurrentWord);
             FindMisspell();
+        }
+
+        private void openDictionaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dict.OpenDictionary();
+        }
+
+        private void dictionaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

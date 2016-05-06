@@ -56,7 +56,6 @@ namespace spellchecker
         public void ReplaceWord(string correctWord)
         {
             inputWords[wordCurrent] = correctWord;
-            wordCurrent++;
         }
 
         public string GetString()
