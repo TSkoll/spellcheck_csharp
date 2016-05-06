@@ -52,7 +52,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 58);
+            this.label2.Location = new System.Drawing.Point(12, 110);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(172, 13);
             this.label2.TabIndex = 1;
@@ -61,7 +61,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 213);
+            this.label3.Location = new System.Drawing.Point(12, 265);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 2;
@@ -70,21 +70,25 @@
             // inbox
             // 
             this.inbox.Location = new System.Drawing.Point(12, 25);
+            this.inbox.Multiline = true;
             this.inbox.Name = "inbox";
-            this.inbox.Size = new System.Drawing.Size(260, 20);
+            this.inbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.inbox.Size = new System.Drawing.Size(260, 72);
             this.inbox.TabIndex = 3;
             // 
             // outbox
             // 
-            this.outbox.Location = new System.Drawing.Point(12, 229);
+            this.outbox.Location = new System.Drawing.Point(12, 281);
+            this.outbox.Multiline = true;
             this.outbox.Name = "outbox";
-            this.outbox.Size = new System.Drawing.Size(260, 20);
+            this.outbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.outbox.Size = new System.Drawing.Size(260, 74);
             this.outbox.TabIndex = 4;
             // 
             // listSuggest
             // 
             this.listSuggest.FormattingEnabled = true;
-            this.listSuggest.Location = new System.Drawing.Point(12, 74);
+            this.listSuggest.Location = new System.Drawing.Point(12, 126);
             this.listSuggest.Name = "listSuggest";
             this.listSuggest.Size = new System.Drawing.Size(172, 134);
             this.listSuggest.TabIndex = 5;
@@ -92,7 +96,7 @@
             // bReplace
             // 
             this.bReplace.Enabled = false;
-            this.bReplace.Location = new System.Drawing.Point(197, 115);
+            this.bReplace.Location = new System.Drawing.Point(197, 167);
             this.bReplace.Name = "bReplace";
             this.bReplace.Size = new System.Drawing.Size(75, 23);
             this.bReplace.TabIndex = 6;
@@ -103,7 +107,7 @@
             // bSkip
             // 
             this.bSkip.Enabled = false;
-            this.bSkip.Location = new System.Drawing.Point(197, 144);
+            this.bSkip.Location = new System.Drawing.Point(197, 196);
             this.bSkip.Name = "bSkip";
             this.bSkip.Size = new System.Drawing.Size(75, 23);
             this.bSkip.TabIndex = 7;
@@ -114,7 +118,7 @@
             // bAdd
             // 
             this.bAdd.Enabled = false;
-            this.bAdd.Location = new System.Drawing.Point(197, 173);
+            this.bAdd.Location = new System.Drawing.Point(197, 225);
             this.bAdd.Name = "bAdd";
             this.bAdd.Size = new System.Drawing.Size(75, 35);
             this.bAdd.TabIndex = 8;
@@ -124,7 +128,7 @@
             // 
             // bCheck
             // 
-            this.bCheck.Location = new System.Drawing.Point(197, 51);
+            this.bCheck.Location = new System.Drawing.Point(197, 103);
             this.bCheck.Name = "bCheck";
             this.bCheck.Size = new System.Drawing.Size(75, 23);
             this.bCheck.TabIndex = 9;
@@ -136,7 +140,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(284, 367);
             this.Controls.Add(this.bCheck);
             this.Controls.Add(this.bAdd);
             this.Controls.Add(this.bSkip);
@@ -147,8 +152,10 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Spellcheck";
+            this.Text = "Spellcheck v0.1";
             this.ResumeLayout(false);
             this.PerformLayout();
 

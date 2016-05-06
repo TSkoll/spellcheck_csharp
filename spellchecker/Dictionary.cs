@@ -48,5 +48,16 @@ namespace spellchecker
             return dictionary.Contains(someWord);
 
         }
+
+        public void AddToDictionary(string someWord)
+        {
+            someWord = someWord.NormalizeWord();
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine();
+                sw.Write(someWord);
+            }
+            dictionary.Add(someWord);
+        }
     }
 }
