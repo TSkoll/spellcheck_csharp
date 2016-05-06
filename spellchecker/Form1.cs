@@ -23,24 +23,43 @@ namespace spellchecker
         private void bCheck_Click(object sender, EventArgs e)
         {
             if (!dict.DictionaryLoaded)
+            {
                 dict.OpenDictionary();
-            outbox.Text = "";
-            input = new Input();
-            input.GetWords(inbox.Text);
-            bReplace.Enabled = true;
-            bSkip.Enabled = true;
-            bAdd.Enabled = true;
-            FindMisspell();
+                if (!dict.DictionaryLoaded)
+                    MessageBox.Show("Error: You must load a dictionary before proceeding");
+                else
+                {
+                    outbox.Text = "";
+                    input = new Input();
+                    input.GetWords(inbox.Text);
+                    FindMisspell();
+                }
+            }
+            else
+            {
+                outbox.Text = "";
+                input = new Input();
+                input.GetWords(inbox.Text);
+                FindMisspell();
+            }
+            
         }
 
         private void FindMisspell()
-        {            
+        {
             input.FindNextMisspell(dict);
             if (!input.ReachedEnd)
             {
                 label2.Text = "We couldn't find this word: " + input.CurrentWord;
                 listSuggest.Items.Clear();
                 listSuggest.Items.AddRange(input.GetSuggestions(dict).ToArray());
+                bSkip.Enabled = true;
+                bAdd.Enabled = true;
+                if (listSuggest.Items.Count > 0)
+                {
+                    listSuggest.SelectedIndex = 0;
+                    bReplace.Enabled = true;
+                }
             }
             else
             {

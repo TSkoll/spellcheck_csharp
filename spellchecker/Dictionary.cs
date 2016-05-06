@@ -51,6 +51,7 @@ namespace spellchecker
 
         public void AddToDictionary(string someWord)
         {
+            someWord = someWord.NormalizeWord();
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine();

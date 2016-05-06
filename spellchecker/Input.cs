@@ -10,7 +10,7 @@ namespace spellchecker
     public class Input
     {
         private List<string> inputWords;
-        private int wordCurrent = 0;
+        private int wordCurrent = -1;
 
         public bool ReachedEnd
         {
@@ -39,8 +39,7 @@ namespace spellchecker
 
         public void FindNextMisspell(Dictionary someDictionary)
         {
-            while ((wordCurrent < inputWords.Count) && (someDictionary.Contains(inputWords[wordCurrent].NormalizeWord())))
-                wordCurrent++;
+            do wordCurrent++; while ((wordCurrent < inputWords.Count) && ((someDictionary.Contains(inputWords[wordCurrent].NormalizeWord())) || (CurrentWord.Normalize().Length == 0)));
         }
 
         public List<string> GetSuggestions(Dictionary someDictionary)
