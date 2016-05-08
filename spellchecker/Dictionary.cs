@@ -9,10 +9,10 @@ using StringExtended;
 
 namespace spellchecker
 {
-    public class Dictionary
+    public class Dict
     {
         private string path = "";
-        private List<string>[] dictionary = new List<string>[27];
+        private Dictionary<string, List<string>>[] dictionary = new Dictionary<string, List<string>>[27];
 
         public bool DictionaryLoaded
         {
@@ -36,31 +36,80 @@ namespace spellchecker
 
         private void GetDictionary(string somePath)
         {
+            Form2 pleaseWaitWindow = new Form2();
+            pleaseWaitWindow.Show();
             for (int i = 0; i < 27; i++)
             {
-                dictionary[i] = new List<string>();
+                dictionary[i] = new Dictionary<string, List<string>>();
             }
             using (StreamReader reader2 = new StreamReader(File.OpenRead(path)))
             {
+                pleaseWaitWindow.InitializeProgressBar(path);
                 while (!reader2.EndOfStream)
                 {
                     string buffer = reader2.ReadLine();
                     if (String.IsNullOrWhiteSpace(buffer))
                         continue;
-                    else if (Convert.ToInt32(buffer.ToCharArray()[0]) - 97 >= 0)
-                        dictionary[buffer[0] - 97].Add(buffer);
-                    else
-                        dictionary[26].Add(buffer);
+                    Edit edits = new Edit();
+                    List<string> keys = edits.GetEdits(buffer);
+                    foreach (string key in keys)
+                    {
+                        if (Convert.ToInt32(key.ToCharArray()[0]) - 97 >= 0)
+                        {
+                            if (!dictionary[key[0] - 97].ContainsKey(key))
+                                dictionary[key[0] - 97].Add(key, new List<string>());
+                            dictionary[key[0] - 97][key].Add(buffer);
+                        }
+                        else
+                        {
+                            if (!dictionary[26].ContainsKey(key))
+                                dictionary[26].Add(key, new List<string>());
+                            dictionary[26][key].Add(buffer);
+                        }                          
+                    }
+                    pleaseWaitWindow.PerformStep();
                 }
             }
+            pleaseWaitWindow.Close();
         }
 
         public bool Contains(string someWord)
         {
-            if (someWord[0] - 97 >= 0)
-                return dictionary[someWord[0] - 97].Contains(someWord);
+            bool contains = false;
+            Edit edits = new Edit();
+            List<string> keys = edits.GetEdits(someWord);
+            foreach (string key in keys)
+                if (Convert.ToInt32(key.ToCharArray()[0]) - 97 >= 0)
+                {
+                    if (dictionary[key[0] - 97].ContainsKey(key))
+                        if (dictionary[key[0] - 97][key].Contains(someWord))
+                        {
+                            contains = true;
+                            break;
+                        }
+                }
+                else
+                {
+                    if (dictionary[26].ContainsKey(key))
+                        if (dictionary[26][key].Contains(someWord))
+                        {
+                            contains = true;
+                            break;
+                        }
+                }
+            return contains;
+        }
+
+        public List<string> GetMatches(string someKey)
+        {
+            List<string> matches = new List<string>();
+            if (Convert.ToInt32(someKey.ToCharArray()[0]) - 97 >= 0)
+                if (dictionary[someKey[0] - 97].ContainsKey(someKey))
+                    matches.AddRange(dictionary[someKey[0] - 97][someKey]);
             else
-                return dictionary[26].Contains(someWord);
+                if (dictionary[someKey[0]-97].ContainsKey(someKey))
+                    matches.AddRange(dictionary[26][someKey]);
+            return matches;
         }
 
         public void AddToDictionary(string someWord)
@@ -71,10 +120,15 @@ namespace spellchecker
                 sw.WriteLine();
                 sw.Write(someWord);
             }
-            if (someWord[0] - 97 >= 0)
-                dictionary[someWord[0] - 97].Add(someWord);
-            else
-                dictionary[26].Add(someWord);
+            Edit edits = new Edit();
+            List<string> keys = edits.GetEdits(someWord);
+            foreach (string key in keys)
+                if (Convert.ToInt32(key.ToCharArray()[0]) - 97 >= 0)
+                    if (dictionary[key[0] - 97].ContainsKey(key))
+                        dictionary[key[0] - 97][key].Add(someWord);
+                else
+                    if (dictionary[key[0] - 97].ContainsKey(key))
+                        dictionary[26][key].Add(someWord);
         }
     }
 }
