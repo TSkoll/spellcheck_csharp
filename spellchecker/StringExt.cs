@@ -25,6 +25,7 @@ namespace StringExtended
                 someWord = someWord.Remove(i, 1);
                 i--;
             }
+
             return someWord;
         }
     }

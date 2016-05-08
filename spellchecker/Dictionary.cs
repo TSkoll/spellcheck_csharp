@@ -12,7 +12,7 @@ namespace spellchecker
     public class Dictionary
     {
         private string path = "";
-        private List<string> dictionary = new List<string>();
+        private List<string>[] dictionary = new List<string>[27];
 
         public bool DictionaryLoaded
         {
@@ -36,17 +36,29 @@ namespace spellchecker
 
         private void GetDictionary(string somePath)
         {
+            for (int i = 0; i < 27; i++)
+            {
+                dictionary[i] = new List<string>();
+            }
             using (StreamReader reader2 = new StreamReader(File.OpenRead(path)))
             {
                 while (!reader2.EndOfStream)
-                    dictionary.Add(reader2.ReadLine());
+                {
+                    string buffer = reader2.ReadLine();
+                    if (Convert.ToInt32(buffer.ToCharArray()[0]) - 97 >= 0)
+                        dictionary[buffer[0] - 97].Add(buffer);
+                    else
+                        dictionary[26].Add(buffer);
+                }
             }
         }
 
         public bool Contains(string someWord)
         {
-            return dictionary.Contains(someWord);
-
+            if (someWord[0] - 97 >= 0)
+                return dictionary[someWord[0] - 97].Contains(someWord);
+            else
+                return dictionary[26].Contains(someWord);
         }
 
         public void AddToDictionary(string someWord)
@@ -57,7 +69,10 @@ namespace spellchecker
                 sw.WriteLine();
                 sw.Write(someWord);
             }
-            dictionary.Add(someWord);
+            if (someWord[0] - 97 >= 0)
+                dictionary[someWord[0] - 97].Add(someWord);
+            else
+                dictionary[26].Add(someWord);
         }
     }
 }
