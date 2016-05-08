@@ -22,6 +22,12 @@ namespace spellchecker
 
         private void bCheck_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(inbox.Text)) // You may want to move this elsewhere
+            {
+                MessageBox.Show("Input cannot be empty!");
+                return;
+            }
+
             if (!dict.DictionaryLoaded)
             {
                 dict.OpenDictionary();
