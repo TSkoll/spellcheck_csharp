@@ -33,13 +33,13 @@ namespace spellchecker
 
         public void GetWords(string inputString)
         {
-            char[] delim = { ' ' };
+            char[] delim = { ' ', '\r', '\n' };
             inputWords = inputString.Split(delim, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
         public void FindNextMisspell(Dict someDictionary)
         {
-            do wordCurrent++; while ((wordCurrent < inputWords.Count) && ((someDictionary.Contains(inputWords[wordCurrent].NormalizeWord())) || (CurrentWord.Normalize().Length == 0)));
+            do wordCurrent++; while ((wordCurrent < inputWords.Count) && ((someDictionary.Contains(inputWords[wordCurrent].NormalizeWord())) || (CurrentWord.NormalizeWord().Length == 0)));
         }
 
         public List<string> GetSuggestions(Dict someDictionary)
