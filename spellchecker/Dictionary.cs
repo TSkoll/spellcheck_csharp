@@ -124,9 +124,11 @@ namespace spellchecker
             List<string> keys = edits.GetEdits(someWord);
             foreach (string key in keys)
                 if (Convert.ToInt32(key.ToCharArray()[0]) - 97 >= 0)
-                    dictionary[key[0] - 97][key].Add(someWord);
+                    if (dictionary[key[0] - 97].ContainsKey(key))
+                        dictionary[key[0] - 97][key].Add(someWord);
                 else
-                    dictionary[26][key].Add(someWord);
+                    if (dictionary[key[0] - 97].ContainsKey(key))
+                        dictionary[26][key].Add(someWord);
         }
     }
 }
