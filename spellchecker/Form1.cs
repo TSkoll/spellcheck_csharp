@@ -12,7 +12,7 @@ namespace spellchecker
 {
     public partial class Form1 : Form
     {
-        private Dictionary dict = new Dictionary();
+        private Dict dict = new Dict();
         private Input input;
 
         public Form1()

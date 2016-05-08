@@ -37,19 +37,18 @@ namespace spellchecker
             inputWords = inputString.Split(delim, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
-        public void FindNextMisspell(Dictionary someDictionary)
+        public void FindNextMisspell(Dict someDictionary)
         {
             do wordCurrent++; while ((wordCurrent < inputWords.Count) && ((someDictionary.Contains(inputWords[wordCurrent].NormalizeWord())) || (CurrentWord.Normalize().Length == 0)));
         }
 
-        public List<string> GetSuggestions(Dictionary someDictionary)
+        public List<string> GetSuggestions(Dict someDictionary)
         {
             Edit edits = new Edit();
-            List<string> editsList = edits.GetEdits(inputWords[wordCurrent].NormalizeWord());
+            List<string> keys = edits.GetEdits(inputWords[wordCurrent].NormalizeWord());
             List<string> suggestions = new List<string>();
-            foreach (string word in editsList)
-                if (someDictionary.Contains(word) && !suggestions.Contains(word))
-                    suggestions.Add(word);
+            foreach (string key in keys)
+                suggestions.AddRange(someDictionary.GetMatches(key));
             return suggestions;
         }
 
