@@ -45,7 +45,9 @@ namespace spellchecker
                 while (!reader2.EndOfStream)
                 {
                     string buffer = reader2.ReadLine();
-                    if (Convert.ToInt32(buffer.ToCharArray()[0]) - 97 >= 0)
+                    if (String.IsNullOrWhiteSpace(buffer))
+                        continue;
+                    else if (Convert.ToInt32(buffer.ToCharArray()[0]) - 97 >= 0)
                         dictionary[buffer[0] - 97].Add(buffer);
                     else
                         dictionary[26].Add(buffer);
