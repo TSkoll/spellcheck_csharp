@@ -162,7 +162,6 @@
             this.dictionaryToolStripMenuItem.Name = "dictionaryToolStripMenuItem";
             this.dictionaryToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.dictionaryToolStripMenuItem.Text = "Dictionary";
-            this.dictionaryToolStripMenuItem.Click += new System.EventHandler(this.dictionaryToolStripMenuItem_Click);
             // 
             // openDictionaryToolStripMenuItem
             // 

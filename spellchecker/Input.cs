@@ -48,7 +48,7 @@ namespace spellchecker
             List<string> editsList = edits.GetEdits(inputWords[wordCurrent].NormalizeWord());
             List<string> suggestions = new List<string>();
             foreach (string word in editsList)
-                if (someDictionary.Contains(word))
+                if (someDictionary.Contains(word) && !suggestions.Contains(word))
                     suggestions.Add(word);
             return suggestions;
         }

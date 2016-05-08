@@ -93,10 +93,5 @@ namespace spellchecker
         {
             dict.OpenDictionary();
         }
-
-        private void dictionaryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
